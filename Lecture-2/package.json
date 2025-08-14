@@ -1,0 +1,22 @@
+{
+  "name": "lecture-2",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest",
+    "start": "npx parcel index.html",
+    "build":"npx parcel build index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "parcel": "^2.15.4"
+  },
+  "browserslists":[
+    "last 3 versions"
+  ]
+}

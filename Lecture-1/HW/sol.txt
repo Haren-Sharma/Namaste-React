@@ -1,0 +1,139 @@
+Q)What is Emmet?
+Emmet is the essential toolkit for web-developers. 
+It allows you to type shortcuts that are then expanded into full-fledged boiler plate code for writing HTML and CSS.
+
+Q)What is Library? 
+Library is a collections of prewritten code snippets that can be used and reused to perform certain tasks. 
+Examples: React, jQuery
+
+Q) What is Framework?
+Framework provides a basic foundation or structure for a 
+website or an application.
+Examples: Angular
+
+Q ) Similarities between Library and Framework?
+Frameworks and libraries are code written by third parties to 
+solve regular/common problems or to optimise performance.
+
+Q ) Difference between Library and Framework?
+A key difference between the two is Inversion of control. 
+When using a library, the control remains with the developer who tells the application when to call library functions. 
+When using a framework, the control is reversed, which means that the framework tells the developer where code needs to be 
+provided and calls it as it requires.
+
+Q)What is CDN? Why do we use it? 
+A CDN (Content Delivery Network) is a distributed network of servers strategically placed across different geographic locations to 
+deliver content (like images, videos, stylesheets, JavaScript files, or even entire web pages) to users faster and more reliably.
+Why we use a CDN:
+-Speed / Performance
+    CDNs store cached copies of your content on multiple edge servers around the world.
+    When a user requests a file, the CDN serves it from the nearest server instead of your main server, reducing latency.
+-Reduced Load on Origin Server
+    Since most requests are served from CDN caches, your main server handles fewer requests, freeing resources for dynamic content or API calls.
+-Scalability
+-Better User Experience
+    Faster load times lead to lower bounce rates and higher engagement.
+-DDoS Protection & Security
+    Many CDNs offer protection against attacks, SSL encryption, and bot filtering.
+-Global Availability
+    Users around the world get similar loading speeds regardless of their distance from your main server.
+
+
+Q)Why is React known as React? 
+React is a JavaScript Library. The name ‘React’ was chosen because the library was designed to allow developers to react 
+to changes in state and data within an application, and to update the user interface in a declarative and efficient 
+manner
+
+Q)What is crossorigin in script tag? 
+The crossorigin attribute in the script tag enables Cross-Origin Resource Sharing (CORS) for loading external JavaScript 
+files from different origin than the hosting web page. This allows the script to access resources from the server hosting 
+the script, such as making HTTP requests or accessing data.
+
+Q)What is diference between React and ReactDOM 
+1. React
+Purpose: Core library for building UI components.
+
+What it contains:
+    Component creation (function or class components).
+    Hooks (useState, useEffect, etc.).
+    JSX processing.
+    Virtual DOM logic.
+    It does not know where your UI will render — browser, mobile, VR, etc.
+
+Example use:
+
+import React from "react";
+
+function App() {
+  return <h1>Hello World</h1>;
+}
+export default App;
+
+2. ReactDOM
+Purpose: Connects React to the web browser’s DOM.
+What it does:
+    Takes your React components and renders them into actual HTML elements in the browser.
+    Provides methods like createRoot and render.
+
+Example use:
+
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+Think of it like this:
+React = The blueprint & brain (how components work, how state updates, virtual DOM diffing).
+ReactDOM = The worker that takes that blueprint and builds it in the browser’s real DOM.
+
+💡 Fun fact:
+ReactDOM is only for the web.
+For mobile apps (React Native), there’s no ReactDOM — instead, React Native has its own renderer that targets native components.
+
+Q)What is difference between react.development.js and react.production.js files via CDN?
+1. react.development.js
+Purpose: For local development and debugging.
+Characteristics:
+    Unminified (readable code).
+    Includes helpful error messages, warnings, and checks.
+    Larger file size.
+    Slower performance (because of extra validations).
+
+2. react.production.min.js
+Purpose: For live, public websites (production).
+Characteristics:
+    Minified (short variable names, no spaces, compressed code).
+    No development warnings or extra checks — only essential code.
+    Much smaller file size.
+    Faster execution.
+
+Q)What is async and defer? 
+1. The problem they solve,by default:
+<script src="script.js"></script>
+The browser stops parsing HTML when it sees a <script>.
+It downloads the script.
+It executes the script before continuing to render the page.
+This can slow down page load because HTML parsing is paused.
+
+2. async:
+<script src="script.js" async></script>
+Download: Happens in parallel with HTML parsing.
+Execution: Happens as soon as the script finishes downloading, even if HTML parsing isn’t done.
+Order: Not guaranteed (if you have multiple scripts).
+Good for: Independent scripts that don’t rely on other scripts or the DOM being ready (e.g., analytics).
+
+Timeline for async:
+[Download script] (in parallel with HTML parsing)
+ → When download finishes → Pause HTML parsing → Execute script → Resume parsing
+
+3. defer
+<script src="script.js" defer></script>
+Download: Happens in parallel with HTML parsing.
+Execution: Happens only after the HTML parsing is complete (just before DOMContentLoaded).
+Order: Guaranteed in the order they appear in HTML.
+Good for: Scripts that need the DOM fully loaded before running.
+
+Timeline for defer:
+[Download script] (in parallel with HTML parsing)
+ → Finish HTML parsing → Execute scripts in order

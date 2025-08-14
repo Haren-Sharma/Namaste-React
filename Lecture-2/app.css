@@ -1,0 +1,26 @@
+#head {
+  color: blue;
+  font-size: 50px;
+}
+.paragraph {
+    color: brown;
+}
+.subhead {
+    color: cadetblue;
+}
+.subdiv {
+    background-color: aquamarine;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 10px;
+}
+#heading {
+    color: blueviolet;
+}
+#maindiv {
+    padding: 20px;
+    background-color: rgb(224, 134, 15);
+    border: 4px solid red;
+    border-radius: 20px;
+}

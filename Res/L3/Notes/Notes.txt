@@ -1,0 +1,44 @@
+Lec-3
+
+JSX is a javascript syantx which is easier to create react elements
+JSX is not html inside javascript 
+JSX is a html-like  or XML-like syantx
+JSX is not react
+
+When we use React.createElement it gives us a ReactElement(Js Object) =>HTMLElement(render)
+But when we use JSX 
+JSX is converted/transpiled (by babel) to React.createElement => ReactElement(Js Object) =>HTMLElement(render)
+Attributes in JSX are written in camelcase
+
+Babel is a JS compiler
+Babel also transpiles / converts the modern js to be compatible for older versions as well
+
+To write JSX in multiple lines we have to enclose our code in ()
+const jsdfg=<h1>Namaste JS</h1>
+
+React Components 
+-Functional Components
+-Class Based Components
+
+React Functional Components
+-It is just a javascript function which returns jsx;
+-Make the function name Capitalize for e.g Home,Heading,etc.
+
+Rendering a react element 
+root.render(heading)
+
+Rendering a react functional component
+root.render(<Header/>)
+
+Component Composition
+Basically including/composing one component into another
+
+JSX also prevents cross site srcipting attacks for you also 
+for e.g
+const data=api.getData() //it returned some malicious data
+const Head=()=><div>{data}</div> //jsx will not straight away execute the js inside {} it will first check and sanitize the content and then delivers it
+
+These three things are one and the same thing
+{Head()}
+<Head/>
+<Head></Head>

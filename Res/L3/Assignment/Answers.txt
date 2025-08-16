@@ -1,0 +1,109 @@
+Q)JSX(JavaScript XML)
+-JSX is a javascript syantx which is easier to create react elements
+-JSX is not html inside javascript 
+-JSX is a html-like or XML-like syantx
+-JSX is not react
+-JSX also prevents cross site srcipting attacks for you,for e.g
+const data=api.getData() //it returned some malicious data
+const Head=()=><div>{data}</div> //jsx will not straight away execute the js inside {} it will first check and sanitize the content and then delivers it
+
+Q)React.createElement vs JSX
+-React.createElement is the traditional and not so readable format of creating react elements
+-With the help of JSX , we can write nore readable code for creating react elements
+-Babel is a JS compiler
+-Babel basically transpiles the JSX that is readable to React.createElement(under the hood) 
+which then eventually returns a react element
+-Babel also transpiles / converts the modern js to be compatible for older versions as well
+-const heading=React.createElement("h1",{id:"heading},"Demo Example");
+-Using JSX
+const heading=(
+    <h1>Demo Example</h1>
+)
+
+Q)Babel and parcel role in JSX
+-You write JSX → Parcel sees .jsx file.
+-Parcel calls Babel → Babel compiles JSX into JS.
+-Parcel bundles all files → sends to browser.
+-Browser runs the compiled JavaScript → React renders UI.
+
+Q)Components
+-Building blocks of UI that returns react elements
+-2 Types:
+a)class based 
+b)functional based(always capital casing,e.g Home,Header,etc.)
+-it is just a javascript function at the end of the day which returns JSX or eventually a React element
+
+Q)Composing Components
+-One component inside other
+
+Q)Can we use JSX without a bundler like parcel
+-Yes we can but it will be slow and not advisable
+-Basically we need to include babel in our project 
+-And then include our code inside a script whose type will be "text/babel"
+-Babel then automatically converts our code to React.createElement when then converts it to an HTMLElement and render it on the UI
+-Browsers don't understand JSX
+
+Q)Role of type attribute in script tag? What options can I use there?
+-the type attribute in a <script> tag tells the browser what kind of code the script contains.
+-In HTML5, if you omit type, it defaults to "text/javascript".
+1. text/javascript (default)
+➡️ Executes normal JavaScript. (You can omit it since it’s default.)
+
+2. module
+<script type="module">
+  import { greet } from './utils.js';
+  greet();
+</script>
+
+➡️ Tells the browser this script is an ES6 module:
+    -Allows import and export.
+    -Runs in strict mode automatically.
+    -Scripts are loaded deferred (like defer by default).
+
+3. importmap (newer, for module import maps)
+<script type="importmap">
+{
+  "imports": {
+    "lodash": "/libs/lodash-es.js"
+  }
+}
+</script>
+➡️ Lets you control how module specifiers (import "lodash") are resolved in the browser.
+
+4. application/json (for embedding JSON data, not executed)
+<script type="application/json" id="config">
+  { "theme": "dark", "lang": "en" }
+</script>
+
+
+➡️ Browser doesn’t execute it; you can fetch its contents with JS:
+
+const config = JSON.parse(document.getElementById("config").textContent);
+
+5. application/ld+json (structured data for SEO)
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Haren Sharma"
+}
+</script>
+
+
+➡️ Used for structured data / rich snippets for search engines.
+
+6. Custom MIME types (ignored by browser, used as data containers)
+<script type="text/x-template" id="tpl">
+  <div>Hello {{name}}</div>
+</script>
+
+
+➡️ Not executed; frameworks (like Vue, Handlebars) use this trick to store templates.
+
+Q){TitleComponent} vs {<TitleComponent/>} vs
+{<TitleComponent></TitleComponent>} in JSX
+-{TitleComponent}=>It won't render the TitleComponent.It will show nothing
+-{<TitleComponent/>}=> It is redundant to use {} , but still this will render the TitleComponent
+-{<TitleComponent></TitleComponent>}=>same as above but we can pass children as well
+
+

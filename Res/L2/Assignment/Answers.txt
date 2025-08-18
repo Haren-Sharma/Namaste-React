@@ -1,11 +1,43 @@
- Theory Assignment: 
- Q)What is `NPM`?
+Q)What is `NPM`?
+-NPM is a repo/store of all the packages available to us that we can install in our project
+-It is everything except node package manager(according to official docs)
 
+Q)What is `Parcel/Webpack`? Why do we need it? 
+-Parcel and Webpack are module bundlers (also called build tools).
+They take all your project files (JavaScript, CSS, HTML, images, etc.) and bundle them into optimized files that can run efficiently in a browser.
+-Bundler basically bundles our whole app so that it can be shipped to production
+-It comes with a lot of benefits:
+    -Babel:Browsers don’t understand modern JavaScript directly
+    You might write code using JSX (React), ES6+ syntax (import/export, async/await), or TypeScript.
+    Browsers can’t run these directly, so bundlers use Babel (or similar) to transpile your code into plain old JavaScript.
+    -Hot Module Replacement(every time we save, the changes are reflected instantly)
+    -It uses file watching alogorithm(written in C++)
+    -Dev and Production Builds
+    -Local Server(parcel localhost:1234)
+    -Caching - Faster Builds(parcel-cache folder)
+    -Image Optimization
+    -Minification-smaller bundle size
+    -Bundling
+    -Compressing
+    -Consistent Hashing
+    -Code splitting-loads only what’s needed.
+    -Differential Bundling(supports older browsers)
+    -Error handling
+    -HTTPS
+    -Tree Shaking(removes unused code)
+
+Q)What is `.parcel-cache` 
+-This folder is where Parcel stores cached build data so that it doesn’t need to re-process everything from scratch each time you run it.
+-Parcel only rebuilds the files that changed.
+-Other files are reused from .parcel-cache.
+-This makes builds and hot reloading much faster.
+
+Q)What is `npx` ? 
+-npx is a package runner tool that comes bundled with npm (v5.2+).
+-It allows you to execute Node.js packages (CLI tools) without installing them globally
+-Basically when we want to execute a package
  
- Q)What is `Parcel/Webpack`? Why do we need it? 
- Q)What is `.parcel-cache` 
- Q)What is `npx` ? 
- Q)What is difference between `dependencies` vs `devDependencies` 
+Q)What is difference between `dependencies` vs `devDependencies` 
  Q)What is Tree Shaking? 
  Q)What is Hot Module Replacement? 
  Q)List down your favourite 5 superpowers of Parcel and describe any 3 of them in your 
@@ -16,6 +48,4 @@
  Q)What is `node_modules` ? Is it a good idea to push that on git? 
  Q)What is the `dist` folder? 
  Q)What is `browserlists` 
- Read about dif bundlers: vite, webpack, parcel 
- ●   Read about:  ^ - caret and ~ - tilda 
- ●   Read about Script types in html (MDN Docs)
+ Q)caret(^) and Tilde(~)

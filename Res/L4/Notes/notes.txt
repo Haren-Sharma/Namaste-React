@@ -1,0 +1,7 @@
+Config Driven UI
+UI is driven by data/config which comes from backend
+
+Key is very important
+If the key is not mentioned ,and a new element comes,react won't know where exacrly to place it,so it will re-render the complete list
+React itself says that don't use indexes as keys
+Index as a key is an anti pattern

@@ -1,7 +1,5 @@
 Q)Is JSX mandatory for React?
 Q)Is ES6 mandatory for React?
-Q){TitleComponent} vs {<TitleComponent/>} vs
-{<TitleComponent></TitleComponent>} in JSX
 Q)How can I write comments in JSX?
 Q)What is <React.Fragment></React.Fragment> and <></> ?
 Q)What is Virtual DOM?

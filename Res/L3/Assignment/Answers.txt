@@ -5,7 +5,8 @@ Q)JSX(JavaScript XML)
 -JSX is not react
 -JSX also prevents cross site srcipting attacks for you,for e.g
 const data=api.getData() //it returned some malicious data
-const Head=()=><div>{data}</div> //jsx will not straight away execute the js inside {} it will first check and sanitize the content and then delivers it
+const Head=()=><div>{data}</div> //jsx will not straight away execute the js inside {} 
+it will first check and sanitize the content and then delivers it
 
 Q)React.createElement vs JSX
 -React.createElement is the traditional and not so readable format of creating react elements
@@ -31,7 +32,8 @@ Q)Components
 -2 Types:
 a)class based 
 b)functional based(always capital casing,e.g Home,Header,etc.)
--it is just a javascript function at the end of the day which returns JSX or eventually a React element
+-it is just a javascript function at the end of the day which returns JSX or 
+eventually a React element
 
 Q)Composing Components
 -One component inside other
@@ -40,7 +42,8 @@ Q)Can we use JSX without a bundler like parcel
 -Yes we can but it will be slow and not advisable
 -Basically we need to include babel in our project 
 -And then include our code inside a script whose type will be "text/babel"
--Babel then automatically converts our code to React.createElement when then converts it to an HTMLElement and render it on the UI
+-Babel then automatically converts our code to React.createElement 
+which then converts it to an HTMLElement and render it on the UI
 -Browsers don't understand JSX
 
 Q)Role of type attribute in script tag? What options can I use there?

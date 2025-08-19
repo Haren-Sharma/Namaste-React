@@ -27,7 +27,8 @@ They take all your project files (JavaScript, CSS, HTML, images, etc.) and bundl
     -Tree Shaking(removes unused code)
 
 Q)What is `.parcel-cache` 
--This folder is where Parcel stores cached build data so that it doesn’t need to re-process everything from scratch each time you run it.
+-This folder is where Parcel stores cached build data so that it doesn’t need to re-process everything from scratch each time you 
+run it.
 -Parcel only rebuilds the files that changed.
 -Other files are reused from .parcel-cache.
 -This makes builds and hot reloading much faster.
@@ -35,17 +36,136 @@ Q)What is `.parcel-cache`
 Q)What is `npx` ? 
 -npx is a package runner tool that comes bundled with npm (v5.2+).
 -It allows you to execute Node.js packages (CLI tools) without installing them globally
--Basically when we want to execute a package
+-Basically when we want to execute a package,we use npx
  
-Q)What is difference between `dependencies` vs `devDependencies` 
- Q)What is Tree Shaking? 
- Q)What is Hot Module Replacement? 
- Q)List down your favourite 5 superpowers of Parcel and describe any 3 of them in your 
- own words. 
+ Q)What is difference between `dependencies` vs `devDependencies` 
+-Dependencies
+    -These are the core depenedencies that we require both in the development phase and on production as well
+
+-devDependencies
+    -These are those dependencies which are only used in the development phase of a project and not on production
+    -it is installed like 
+        -npm i -D package_name
+    
+Q)What is Tree Shaking? 
+-Tree shaking is a process of removing the unwanted code that we do not use while developing the application.
+-In computing, tree shaking is a dead code elimination technique that is applied when optimizing code.
+
+Q)What is Hot Module Replacement? 
+-Normally, when you make code changes, the app reloads the entire page.
+-With HMR, only the updated modules (e.g., a React component, CSS file, or JS logic) are swapped in place while keeping the 
+application state intact.
+-This makes the development process faster and smoother, since you don’t lose things like form inputs, scroll position, or Redux 
+state on every change.
+
+⚙️ How it works:
+    -You start a dev server (like webpack-dev-server or vite dev).
+    -When you save a file, the bundler compiles just the changed modules.
+    -The dev server sends these updates to the browser via WebSocket.
+    -The runtime in the browser replaces the old module with the new one.
+    -If possible, it patches the running app without a full refresh.
+
+HMR = "Don’t reload everything, just replace what changed" (dev-time convenience).
+
+Q)What is Code Splitting ?
+-Purpose → Improves production performance.
+-What it does → Splits your codebase into smaller chunks (bundles) so that the browser only loads what it needs, instead of one giant file.
+-When used → Mostly in production build.
+-Example → A React app with routing → instead of shipping all routes in a single bundle, code splitting loads the Dashboard.js chunk only when the user navigates to /dashboard.
+
+👉 Code splitting is about optimizing loading & performance in production.
+
+Code Splitting = "Don’t load everything, just load what’s needed" (production optimization).
+ 
+For E.g in ReactJS,we can achieve this code splitting behaviour by lazy loading
+
+import React, { Suspense, lazy, useState } from "react";
+
+const Dashboard = lazy(() => import("./Dashboard"));
+const Profile = lazy(() => import("./Profile"));
+
+function App() {
+  const [page, setPage] = useState("dashboard");
+
+  return (
+    <div>
+      <button onClick={() => setPage("dashboard")}>Dashboard</button>
+      <button onClick={() => setPage("profile")}>Profile</button>
+
+      <Suspense fallback={<p>Loading...</p>}>
+        {page === "dashboard" && <Dashboard />}
+        {page === "profile" && <Profile />}
+      </Suspense>
+    </div>
+  );
+}
+
+export default App;
+
+What happens:
+-Initially, the browser loads only the main App.jsx bundle.
+-When you click Profile, React loads the Profile chunk dynamically (profile.[hash].js).
+-This reduces the initial load time since you don’t ship unnecessary code until needed.
+
+
  Q)What is `.gitignore`? What should we add and not add into it? 
- Q)What is the difference between `package.json` and `package-lock.json` 
- Q)Why should I not modify `package-lock.json`? 
- Q)What is `node_modules` ? Is it a good idea to push that on git? 
- Q)What is the `dist` folder? 
- Q)What is `browserlists` 
- Q)caret(^) and Tilde(~)
+-Basically it is a file where we add names of all those files and folders which we donot want 
+to push to github
+-All the things that can be re-generated automatically like node_modules,etc should be included
+
+Q)What is the difference between `package.json` and `package-lock.json` 
+Package.json:
+-It’s the main configuration file for a Node.js project.
+-Defines project metadata (name, version, scripts, dependencies, etc.).
+-Tracks dependencies that you explicitly install.
+-It keeps the versions in ranges(not in exact) with the help of caret(^) and tilde(~)
+
+Package-lock.json
+-Automatically generated whenever npm install modifies node_modules or package.json.
+-It tracks all the packages installed in our application(even including the transitive depenedencies)
+-It keeps exact version of the depenecy installed with a integrity hash,to make sure the same version is running
+on dev as well as production
+
+Caret(^):
+-It allows for minor and patch level updates
+-For e.g 1.3.4 -> is allowed to have 1.3.5,1.3.6 ,,,,1.4.5 uptil 2.0.0(not allowed)
+
+Tilde(~)
+-Only allows patch level updates
+
+Whenever we run npm i:
+Case1:Deleted package-lock.json
+-If we run the command after deleting package-lock.json,then with the help of ^ and ~ packages are upgarded automatically
+
+Case2:Haven't deleted package-lockj.json
+-No matter what the ^ and ~ is , npm will install the exact version packages mentioned in the lock file
+
+Q)Why should I not modify `package-lock.json`? 
+-It locks down the exact versions of all the dependencies and sub-dependencies installed in our project
+-It guarantees that whoever installs the project will get the same version dependencies you used in the development phase
+-Manually editing it may cause:
+    -Version mismatches (lock file says one version, but actual node_modules differ).
+    -Broken integrity hashes, leading to install errors.
+        -The integrity hash is like a fingerprint of the package.
+            -It makes sure:
+                -You always get the same, untampered code.
+                -Builds remain predictable and safe.
+    -Unexpected crashes because dependencies are inconsistent.  
+
+Q)What is `node_modules` ? Is it a good idea to push that on git? 
+-Node modules basically fetches all the code of all the dependencies into our system
+-It is very huge in size and it can be regenerated with the help of package.json and package-lock.json files
+so it is mandatory to put it in .gitignore file
+
+Q)What is the `dist` folder?
+-The dist (distribution) folder is the output directory created by bundlers like Webpack, Parcel, Vite, or Rollup when you build your project for production.
+-It contains the final, optimized, minified, and bundled code (JavaScript, CSS, HTML, images, etc.).
+-This is the folder that is actually deployed to a production server (not your source code).
+-The contents are optimized for performance (smaller file sizes, hashed filenames for caching, tree-shaken code, etc.).
+
+Q)What is `browserlists` 
+-Browserslist is a tool that specifies which browsers should be supported/compatible in your frontend app.
+-It makes our code compatible for a lot of browsers.In package.json file do:
+ "browserslist":[
+    "last 2 versions"
+ ]//this means my parcel will make sure that my app works in last 2 versions of all the browsers available

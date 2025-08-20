@@ -1,7 +1,73 @@
 Q)Is JSX mandatory for React?
+-No JSX is not mandatory for React
+-It is just an easier appraoch of creating React elements with the help of babel 
+as compared to React.createElement()
+-It is more readable also 
+
 Q)Is ES6 mandatory for React?
-Q)How can I write comments in JSX?
+-No, ES6 is not mandatory for React.
+-React itself is just a JavaScript library, so it works with plain ES5 JavaScript as well.
+-However, ES6+ features (like class, arrow functions, let/const, import/export, destructuring) are commonly used in React code because they make components cleaner, shorter, and easier to maintain.
+-Without ES6, you’d need to use older syntax like React.createClass instead of ES6 class components or use require() instead of import.
+
+✅ Example:
+
+-With ES6:
+
+class App extends React.Component {
+  render() {
+    return <h1>Hello</h1>;
+  }
+}
+
+
+-Without ES6:
+
+var App = React.createClass({
+  render: function () {
+    return React.createElement("h1", null, "Hello");
+  }
+});
+
 Q)What is <React.Fragment></React.Fragment> and <></> ?
+-In React, a component must return a single parent element.
+-If you don’t want to wrap elements inside unnecessary <div> or other tags, you can use Fragments.
+-A Fragment does not render any actual DOM element — it’s “invisible.”
+-Since it doesn’t produce a real node, you cannot apply CSS classes, inline styles, or attributes to it.
+
+1. <React.Fragment></React.Fragment>
+-This is the full syntax of a Fragment.
+-It allows grouping multiple children without adding extra nodes to the DOM.
+-Example:
+
+return (
+  <React.Fragment>
+    <h1>Hello</h1>
+    <p>World</p>
+  </React.Fragment>
+);
+
+
+✅ Output in DOM:
+
+<h1>Hello</h1>
+<p>World</p>
+
+2. <> </> (Short Syntax)
+-This is the shorthand for React.Fragment.
+-Works the same, but it cannot take key or props.
+👉 Common interview point:
+If you’re mapping an array and need to add a key, you must use <React.Fragment key={id}> instead of <>.
+
+Example:
+
+return (
+  <>
+    <h1>Hello</h1>
+    <p>World</p>
+  </>
+);
+
 Q)What is Virtual DOM?
 Q)What is Reconciliation in React?
 Q)What is React Fiber?

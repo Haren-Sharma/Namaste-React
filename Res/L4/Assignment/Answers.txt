@@ -7,8 +7,10 @@ as compared to React.createElement()
 Q)Is ES6 mandatory for React?
 -No, ES6 is not mandatory for React.
 -React itself is just a JavaScript library, so it works with plain ES5 JavaScript as well.
--However, ES6+ features (like class, arrow functions, let/const, import/export, destructuring) are commonly used in React code because they make components cleaner, shorter, and easier to maintain.
--Without ES6, you’d need to use older syntax like React.createClass instead of ES6 class components or use require() instead of import.
+-However, ES6+ features (like class, arrow functions, let/const, import/export, destructuring) are commonly used in React code 
+because they make components cleaner, shorter, and easier to maintain.
+-Without ES6, you’d need to use older syntax like React.createClass instead of ES6 class components or use require() instead of 
+import.
 
 ✅ Example:
 
@@ -69,9 +71,225 @@ return (
 );
 
 Q)What is Virtual DOM?
+-The Virtual DOM (VDOM) is basically a lightweight copy of the Real DOM that React (and other libraries like Vue) keeps in memory.
+-The Real DOM is the actual structure in the browser that represents your webpage (all the <div>, <h1>, etc.).
+-The Virtual DOM is like a JavaScript object version of the DOM that React uses to figure out what really changed, instead of updating the whole webpage every time.
+-Why do we need it?
+  -The Real DOM is slow to update, especially if the page is big. For example:
+    -If you change one button’s text, without the Virtual DOM, the browser might need to re-check and repaint large parts of the 
+    page.
+    -With the Virtual DOM, React compares the old virtual DOM with the new virtual DOM (this process is called Diffing). Then it 
+    updates only the parts of the Real DOM that actually changed, not the entire page.
+
+Suppose your page looks like this:
+<div>
+  <h1>Hello User</h1>
+  <button>Click Me</button>
+</div>
+
+If you update the <h1> from Hello User → Hello Haren,
+
+Without Virtual DOM → Browser re-renders the whole <div>.
+With Virtual DOM → React sees that only <h1> text changed, so it updates only that node in the Real DOM.
+
+-The Virtual DOM is like React’s middleman—instead of directly working with the expensive Real DOM, React updates a cheap in-memory 
+copy, figures out exactly what changed, and then makes the minimum number of updates to the actual browser DOM.
+
+-In Short and Crisp
+  -React uses the Virtual DOM to represent the UI in memory.
+  -When state/props change → React creates a new Virtual DOM tree.
+  -It compares the old tree vs new tree → finds differences.(diffing)
+  -Then it updates only the changed parts in the Real DOM.
+
 Q)What is Reconciliation in React?
+-The process React uses to figure out what exactly changed in the UI and how to update the Real DOM efficiently.
+-It has two key parts:
+  1.Render Phase (Diffing Algorithm(Interruptible after React16 upgrade to React Fibre))
+    -React compares the old and new Virtual DOM trees.
+    -Instead of comparing node-by-node deeply (which would be very slow), React uses heuristics:
+      -Different element types (e.g. <div> → <span>) → destroy old + create new.
+      -Same type (e.g. <button> → <button>) → keep the node, update attributes.
+      -Lists → uses keys to track moved/added/removed items.
+  2.Commit Phase(Non Interruptible)
+    -Once differences are found, React applies minimal changes to the Real DOM.
+
+👉 So, Reconciliation is the brain behind deciding what to update.
+
 Q)What is React Fiber?
-Q)Why we need keys in React? When do we need keys in React?
-Q)Can we use index as keys in React?
-Q)What is props in React?
+-Before React 16 (Old Reconciliation / Stack Reconciler)
+  -Updates were synchronous.
+  -If your component tree was huge and you triggered an update, React would:
+    -Build the whole Virtual DOM tree.
+    -Diff it with the old one.
+    -Apply updates.
+
+Problem: The UI could freeze because React couldn’t pause the work in the middle.
+
+Example: If a heavy component re-rendered, animations or user typing could feel laggy.
+
+-React 16 and after → React Fiber
+  -React team introduced Fiber (completely rewritten reconciler) in React 16.
+  -Fiber = New Virtual DOM Engine (not visible to us directly).
+
+🔑 Goals of Fiber:
+-Interruptible Rendering
+  -React can now pause rendering work if something more important happens (like a button click).
+  -Example: Updating a large table → React can pause in the middle, let you type smoothly, then continue.
+-Prioritization
+  -Not all updates are equally important.
+  -Example: Animation frames > background data updates.
+  -Fiber assigns priorities to updates.
+
+-Incremental Rendering
+  -Instead of rendering the whole tree at once, React can render it piece by piece.
+  -This is possible because Fiber breaks the work into small units of work (called “fibers”).
+
+🟢 How Fiber Works
+
+Think of Fiber as:
+  A linked list of nodes (instead of just a tree).
+  Each Fiber node represents a React element (component, DOM node, etc.).
+  Because it’s a linked structure, React can:
+    Pause at any fiber.
+    Resume later.
+    Even throw away unfinished work if needed.
+
+🟢 Connecting the dots
+
+Virtual DOM → Representation of UI in memory.
+
+Reconciliation → Algorithm that compares old vs new Virtual DOM trees and decides what to update.
+
+React Fiber → New implementation of reconciliation (since React 16) that makes updates asynchronous, interruptible, and prioritized for smoother UIs.
+
+Q)Example to show the importance of React Fibre.Also what is useTransition() ?
+Example: Rendering a Huge List While Typing
+Code:
+import React, { useState } from "react";
+
+export default function App() {
+  const [text, setText] = useState("");
+
+  // Big list of 5000 items
+  const items = Array.from({ length: 5000 }, (_, i) => `Item ${i + 1}`);
+
+  return (
+    <div>
+      <h2>Type something:</h2>
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+
+      <ul>
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+🟡 Before React 16 (Old Reconciliation)
+-When you type in the input:
+  -React re-renders App.
+  -The whole Virtual DOM tree (5000 <li> elements) is regenerated.
+  -React synchronously compares old vs new.
+  -UI freezes briefly before showing your typed character.
+
+➡️ You would notice lag in typing because React couldn’t pause the reconciliation.
+
+🟢 After React 16 (with Fiber)
+-When you type:
+  -React starts re-rendering the Virtual DOM (5000 <li>).
+  -React Fiber splits this into small units of work.
+  -If something urgent happens (like typing input), React pauses the list rendering and handles the input update first.
+  -Then it resumes list rendering without blocking user input.
+
+➡️ The typing feels instant, even though React is still processing the big list in the background.
+
+🟢 Even Better: Using useTransition (React 18+)
+
+React Fiber enables new APIs like Concurrent Rendering.
+We can mark updates as low-priority:
+
+import React, { useState, useTransition } from "react";
+
+export default function App() {
+  const [text, setText] = useState("");
+  const [list, setList] = useState([]);
+  const [isPending, startTransition] = useTransition();
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setText(value);
+
+    // Defer heavy work (low priority)
+    startTransition(() => {
+      const items = Array.from({ length: 5000 }, (_, i) => `${value} - Item ${i + 1}`);
+      setList(items);
+    });
+  };
+
+  return (
+    <div>
+      <h2>Type something:</h2>
+      <input type="text" value={text} onChange={handleChange} />
+
+      {isPending && <p>Loading list...</p>}
+
+      <ul>
+        {list.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+
+✅ Now typing is always smooth, because React prioritizes input updates over rendering the giant list.
+
+Q)Why we need keys in React? 
+-Keys help React identify which items have changed, been added, or removed when rendering lists.
+-During Reconciliation, React compares the old and new Virtual DOM trees.
+-Without keys, React may unnecessarily re-render or reorder DOM elements, causing performance issues or even bugs.
+
+👉 In short: Keys give each element a stable identity.
+
+Q)When do we need keys in React?
+-Whenever you render a list of elements dynamically (using .map() usually).
+
+Example:
+
+const items = ["Apple", "Banana", "Cherry"];
+
+return (
+  <ul>
+    {items.map((item) => (
+      <li key={item}>{item}</li>
+    ))}
+  </ul>
+);
+
+Without keys → React won’t know which <li> corresponds to which item if the array changes.
+
+
+Q)Can we use index as keys in React ?
+-You might be tempted to use an item’s index in the array as its key. In fact, that’s what React will use if you don’t specify a 
+key at all. But the order in which you render items will change over time if an item is inserted, deleted, or if the array gets 
+reordered. Index as a key often leads to subtle and confusing bugs.
+-Similarly, do not generate keys on the fly, e.g. with key={Math.random()}. This will cause keys to never match up between renders, 
+leading to all your components and DOM being recreated every time. Not only is this slow, but it will also lose any user input 
+inside the list items. Instead, use a stable ID based on the data.
+-Note that your components won’t receive key as a prop. It’s only used as a hint by React itself. If your component needs an ID, 
+you have to pass it as a separate prop: <Profile key={id} userId={id} />.
+
+Q)What is props in React ?
+-Props/Properties are the arguments/data that we pass to a component
+
 Q)What is a Config Driven UI ?
+-Config Driven UI means building your UI in such a way that its structure, behavior, and content are controlled by configuration 
+(usually JSON or some data), instead of hardcoding it in components.
+-Config is the data coming from the api which keeps on changing according to different factors like user, location, etc. 

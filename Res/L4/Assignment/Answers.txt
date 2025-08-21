@@ -73,5 +73,5 @@ Q)What is Reconciliation in React?
 Q)What is React Fiber?
 Q)Why we need keys in React? When do we need keys in React?
 Q)Can we use index as keys in React?
-Q)What is props in React? Ways to
+Q)What is props in React?
 Q)What is a Config Driven UI ?

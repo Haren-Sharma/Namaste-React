@@ -1,6 +1,7 @@
 const RestaurantCard = ({
-  data: { name, image, cuisine, location, discount, id },
+  data: { name, image, cuisine, location, discount, rating },
 }) => {
+  console.log("🚀 ~ RestaurantCard ~ rating:", rating)
   console.log("🚀 ~ RestaurantCard ~ cuisine:", cuisine);
   console.log("🚀 ~ RestaurantCard ~ image:", image);
   return (
@@ -10,6 +11,7 @@ const RestaurantCard = ({
       <div>{location}</div>
       <div>{cuisine?.join(", ")}</div>
       <div>{discount}</div>
+      <div>{rating}</div>
     </div>
   );
 };

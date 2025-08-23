@@ -1,0 +1,65 @@
+Q)What is the difference between Named Export, Default export and * as export?
+-Named Export:
+    -Used when we want to export multiple variables, functions, or classes from a single file.
+    -While importing, we must use curly braces {} and the exact name of the export.
+
+    // file.js
+    export const fun1 = () => {};
+    export const fun2 = () => {};
+
+    // import
+    import { fun1, fun2 } from "./file";
+
+
+-Default Export:
+    -A file can have only one default export.
+    -While importing, we don’t need curly braces and we can give it any name.
+
+    // file.js
+    export default function fun1() {}
+
+    // imports (both are valid)
+    import fun1 from "./file";  
+    import anything from "./file";  // allowed, name is flexible
+
+
+    ✅ Example from React:
+
+    import React from "react";  // React is default export
+
+
+- * as Export (Namespace Import):
+    -Imports all named exports of a file under a single namespace object.
+    -Useful when you want to group everything together.
+
+    // file.js
+    export const fun1 = () => {};
+    export const fun2 = () => {};
+
+    // import
+    import * as Utils from "./file";
+
+    Utils.fun1();
+    Utils.fun2();
+
+Q)What is the difference between .env file and config.js file?
+
+| Feature            | `.env` file                                           | `config.js` file                                      |
+| ------------------ | ----------------------------------------------------- | ----------------------------------------------------- |
+| **Purpose**        | Store sensitive info & environment-specific values    | Store app-wide constants, configs, defaults           |
+| **Data Type**      | Plain text (key=value)                                | JavaScript (can export objects, functions, constants) |
+| **Security**       | Should not be committed to git (keep in `.gitignore`) | Usually part of repo (safe to commit)                 |
+| **Usage**          | Access via `process.env`                              | Directly imported like any module                     |
+| **Example Values** | API keys, DB URL, environment                         | Pagination size, timeout, default theme               |
+
+
+Q)What are React Hooks?
+-React Hooks are functions that let you “hook into” React features like state and lifecycle methods inside functional components.
+
+Q) Why do we need a useState Hook?
+-The useState hook is a special function in React that lets us add state to functional components.
+-It returns a state variable and a setter function to update that state.
+-Why is it powerful?
+    -Unlike a regular JavaScript variable, a state variable is reactive → when its value changes, React automatically re-renders 
+    the component to reflect the new UI.
+    -This ensures the UI is always in sync with the state.

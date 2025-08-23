@@ -1,0 +1,17 @@
+CSS:
+1.flex-wrap:
+By default, flex items try to fit in one single row/column (no wrapping).
+flex-wrap tells the container whether items should stay in one line or wrap onto multiple lines if they don’t fit.
+
+2 transform:scale(1.05)
+
+Whenever a state variable updates , react will re-render the component
+
+React Hooks- It is nothing but the javascript utility functions 
+useState()=> it is a utility function that provides us state variables
+
+Why React is fast ?
+Beacuse of its fast dom manipulation wit the help of its reconciliation alogorithm(React Fibre)
+
+
+

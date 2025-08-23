@@ -60,3 +60,16 @@
   width: 300px;
   aspect-ratio: 3/4;
 }
+#filter-top-rated{
+  width: fit-content;
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#search-box{
+  width: fit-content;
+  padding: 10px;
+}
+.btn-filter-selected{
+  background-color: chocolate;
+}

@@ -1,6 +1,5 @@
-import Body from "./components/Body";
-import Footer from "./components/Footer";
 import Header from "./components/Header";
+import { Outlet } from "react-router";
 
 const AppLayout = () => {
   /*
@@ -15,17 +14,17 @@ const AppLayout = () => {
     -Search
     -Restaurant Container
         -Restaurant Cards
-
-    Footer
-    -copyright
-    
-    
     */
   return (
     <div>
       <Header />
-      <Body />
-      <Footer />
+      <Outlet />
+      {/*
+      This Outlet component is provided by react-router
+      With the help of this , the children routes created in the route configuration(createBrowserRouter)
+      will get replaced with Outlet, depending upon the path given to the children.
+      This won't affect our Header it will remian intact in it's position
+      */}
     </div>
   );
 };

@@ -2,17 +2,30 @@ import ReactDOM from "react-dom/client";
 import AppLayout from "./src/AppLayout";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import About from "./src/components/About";
+import Body from "./src/components/Body";
+import Contact from "./src/components/Contact";
 import ErrorComponent from "./src/components/ErrorComponent";
 
 const appRouter = new createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
-    errorElement:<ErrorComponent/>
-  },
-  {
-    path: "/about",
-    element: <About />,
+    children: [
+      // children routes of AppLayout Component
+      {
+        path: "/",
+        element: <Body />, // these elements will get replaced with Outlet defined in AppLayout
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+    ],
+    errorElement: <ErrorComponent />,
   },
 ]);
 

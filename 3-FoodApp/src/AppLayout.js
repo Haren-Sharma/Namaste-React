@@ -2,7 +2,7 @@ import Body from "./components/Body";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
-const App = () => {
+const AppLayout = () => {
   /*
     Header
     -Logo
@@ -29,4 +29,4 @@ const App = () => {
     </div>
   );
 };
-export default App;
+export default AppLayout;

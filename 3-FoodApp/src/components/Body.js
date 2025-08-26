@@ -2,16 +2,20 @@ import RestaurantCard from "./RestaurantCard";
 // import res from "../utils/mockData";
 import { useEffect, useState } from "react";
 import { SWIGGY_API_URL } from "../utils/constants";
+import { useNavigate } from "react-router";
 
 const Body = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [filteredListRestaurants, setFilteredList] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
 
   const fetchRes = async () => {
     const res = await fetch(SWIGGY_API_URL);
     const data = await res.json();
-    console.log(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    console.log(
+      data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
     setRestaurants(
       data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
@@ -42,9 +46,14 @@ const Body = () => {
   };
   const search = () => {
     const filtered = restaurants?.filter((res) =>
-      res?.info?.name?.toLowerCase().includes(searchText.toString().toLowerCase())
+      res?.info?.name
+        ?.toLowerCase()
+        .includes(searchText.toString().toLowerCase())
     );
     setFilteredList(filtered);
+  };
+  const navigateToMenuPage = (resId) => {
+    navigate(`/restaurants/${resId}`);
   };
   return (
     <div className="body">
@@ -64,7 +73,17 @@ const Body = () => {
       </div>
       <div id="restaurant-container">
         {filteredListRestaurants.map((restaurant) => (
-          <RestaurantCard key={restaurant?.info?.id} data={restaurant?.info} />
+          /*
+          Dynmaic Routing:
+            -Link
+            -useNavigate()
+          */
+
+          <RestaurantCard
+            handleClick={() => navigateToMenuPage(restaurant?.info?.id)}
+            key={restaurant?.info?.id}
+            data={restaurant?.info}
+          />
         ))}
       </div>
     </div>

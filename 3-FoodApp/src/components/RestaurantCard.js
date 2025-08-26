@@ -1,6 +1,6 @@
 import { IMG_URL } from "../utils/constants";
 
-const RestaurantCard = ({ data }) => {
+const RestaurantCard = ({ data,handleClick }) => {
   const {
     cloudinaryImageId,
     name,
@@ -10,7 +10,7 @@ const RestaurantCard = ({ data }) => {
     avgRating,
   } = data;
   return (
-    <div className="restaurant-card">
+    <div onClick={()=>handleClick()} className="restaurant-card">
       <img src={IMG_URL + cloudinaryImageId} className="restaurant-card-img" />
       <div>{name}</div>
       <div>{locality + ", " + areaName}</div>

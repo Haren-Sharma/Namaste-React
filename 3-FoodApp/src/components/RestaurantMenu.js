@@ -3,12 +3,18 @@ import { useParams } from "react-router";
 import { SWIGGY_API_URL } from "../utils/constants";
 
 const RestaurantMenu = () => {
-  //as we are doing just the devlopment so we are going to use the same mock api
-  //in reality there will be a diffrent api developed to fetch each restaurant and its menu items with the help of it's resId
+  /*
+    ✅ Rule of Thumb
+    
+    Use <Link> for static navigation (menus, links, lists).
+    Use useNavigate for dynamic/programmatic navigation (after events, conditions, API responses).
+  */
   const [restaurant, setRestaurant] = useState({});
   const { resId } = useParams();
 
   const fetchRestaurant = async () => {
+    //as we are doing just the devlopment so we are going to use the same mock api
+    //in reality there will be a diffrent api developed to fetch each restaurant and its menu items with the help of it's resId
     const raw = await fetch(SWIGGY_API_URL);
     const data = await raw.json();
     const res =
@@ -21,11 +27,12 @@ const RestaurantMenu = () => {
   useEffect(() => {
     fetchRestaurant();
   }, []);
+  
   return (
     <div style={{ padding: 20 }}>
-      <h1 style={{marginTop:10}}>{restaurant?.name}</h1>
-      <h3 style={{marginTop:20,fontStyle:"italic"}}>Menu Items:</h3>
-      <div style={{marginTop:10}}>
+      <h1 style={{ marginTop: 10 }}>{restaurant?.name}</h1>
+      <h3 style={{ marginTop: 20, fontStyle: "italic" }}>Menu Items:</h3>
+      <div style={{ marginTop: 10 }}>
         {restaurant?.cuisines?.map((c) => {
           return <li key={c}>{c}</li>;
         })}

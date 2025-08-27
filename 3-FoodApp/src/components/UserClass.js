@@ -2,18 +2,23 @@ import React from "react";
 
 class UserClass extends React.Component {
   constructor(props) {
-    /*
+      /*
       The below line ensures that this.props is properly initialized
       With the help of this we can access this.props in our constructor as well
       */
-    super(props);
+     super(props);
+     console.log(this.props.name+": Constructor Called");
     this.state = {
       //this will create the state variables for this component
       count: 10,
       count1: 10,
     };
   }
+  componentDidMount() {
+    console.log(this.props.name+": Mounted");
+  }
   render() {
+    console.log(this.props.name+": Render Called");
     const { name, twid } = this.props;
     const { count, count1 } = this.state;
 

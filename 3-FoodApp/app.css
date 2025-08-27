@@ -87,3 +87,7 @@
   width: fit-content;
   padding: 10px;
 }
+.avatar-img{
+  width: 300px;
+  aspect-ratio: 3/4;
+}

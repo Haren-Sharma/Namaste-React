@@ -7,32 +7,24 @@ class About extends React.Component {
     LifeCycle Of About Component
     
     Mounting Cycle
-      Render Phase
-        -Parent Constructor Called
-        -Parent Render Called (with dummy data)
-        -Child Constructor Called
-        -Child Render Called (with dummy data)
-      
-      Commit Phase
-        -Child Did Mount
-        -Parent Did Mount
-        -Api Call
-        -this.setState(api data)
+      -Parent Constructor Called
+      -Parent Render Called (with dummy data)
+      -Child Constructor Called
+      -Child Render Called (with dummy data)
+      -Child Did Mount
+      -Parent Did Mount
+      -Api Call
+      -this.setState(api data)
 
     Updating Cycle
-      Render Phase
-        - Parent Render Called(api data)
-        - Child Render Called(api data)
-      
-      Commit Phase
-        - Child Did Update
-        - Parent Did Update
+      -Parent Render Called(api data)
+      -Child Render Called(api data)
+      -Child Did Update
+      -Parent Did Update
 
     Unmounting Cycle(When you navigate to a different component)
       -Parent Unmounted
       -Child Unmounted
-
-
   */
   constructor(props) {
     super(props);

@@ -28,7 +28,7 @@ class About extends React.Component {
         - Child Did Update
         - Parent Did Update
 
-    Unmounting Cycle(When you navigate to a previous or a different page)
+    Unmounting Cycle(When you navigate to a different component)
       -Parent Unmounted
       -Child Unmounted
 
@@ -46,10 +46,6 @@ class About extends React.Component {
   }
 
   async componentDidMount() {
-    /*
-      It is equivalent to useEffect(()=>{},[]);
-      This is basically used for making API Calls
-    */
     console.log("Parent Did Mount");
     const raw = await fetch("https://api.github.com/users/Haren-Sharma");
     const data = await raw.json();
@@ -59,17 +55,10 @@ class About extends React.Component {
   }
 
   componentDidUpdate() {
-    /*
-      It is equivalent to when a depency changes inside useEffect
-    */
     console.log("Parent Did Update");
   }
 
   componentWillUnmount() {
-    /*
-      It is equivalent to return function cleanup in useEffect
-      It is called when the component unmounts
-    */
     console.log("Parent Unmounted");
   }
 

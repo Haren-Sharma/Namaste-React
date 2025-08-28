@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SWIGGY_API_URL } from "../utils/constants";
 
-const useRestaurant = (resId) => {
+const useRestaurantMenu = (resId) => {
   /*
     -Made this custom hook to fetch the restaurant data 
     -So that RestaurantMenu component follows Single Responsibility Priniciple
@@ -29,4 +29,4 @@ const useRestaurant = (resId) => {
   return restaurant;
 };
 
-export default useRestaurant;
+export default useRestaurantMenu;

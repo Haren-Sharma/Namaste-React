@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import useRestaurant from "../hooks/useRestaurant";
+import useRestaurantMenu from "../hooks/useRestaurantMenu";
 
 const RestaurantMenu = () => {
   /*
@@ -9,7 +9,7 @@ const RestaurantMenu = () => {
     Use useNavigate for dynamic/programmatic navigation (after events, conditions, API responses).
   */
   const { resId } = useParams();
-  const restaurant = useRestaurant(resId);
+  const restaurant = useRestaurantMenu(resId);
 
   return (
     <div style={{ padding: 20 }}>

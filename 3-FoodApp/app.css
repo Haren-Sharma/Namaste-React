@@ -87,7 +87,18 @@
   width: fit-content;
   padding: 10px;
 }
-.avatar-img{
+.avatar-img {
   width: 300px;
   aspect-ratio: 3/4;
+}
+.status {
+  font-size: 20px;
+  font-weight: bolder;
+  font-family: "Courier New", Courier, monospace;
+}
+.status-online {
+  color: rgb(51, 97, 4);
+}
+.status-offline {
+  color: rgb(88, 13, 13);
 }

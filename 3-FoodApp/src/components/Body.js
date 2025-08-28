@@ -3,11 +3,13 @@ import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import { SWIGGY_API_URL } from "../utils/constants";
 import { useNavigate } from "react-router";
+import useOnlineStatus from "../hooks/useOnlineStatus";
 
 const Body = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [filteredListRestaurants, setFilteredList] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const onlineStatus = useOnlineStatus();
   const navigate = useNavigate();
 
   const fetchRes = async () => {
@@ -52,6 +54,7 @@ const Body = () => {
   const navigateToMenuPage = (resId) => {
     navigate(`/restaurants/${resId}`);
   };
+  if (onlineStatus === false) return <h1>User Not Online</h1>;
   return (
     <div className="body">
       <div className="body-header-container">

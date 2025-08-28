@@ -6,6 +6,9 @@ import Body from "./src/components/Body";
 import Contact from "./src/components/Contact";
 import ErrorComponent from "./src/components/ErrorComponent";
 import RestaurantMenu from "./src/components/RestaurantMenu";
+import { lazy, Suspense } from "react";
+
+const Grocery = lazy(() => import("./src/components/Grocery"));
 
 const appRouter = new createBrowserRouter([
   {
@@ -14,7 +17,7 @@ const appRouter = new createBrowserRouter([
     children: [
       // children routes of AppLayout Component
       {
-        path: "/",
+        index: true, //meaning this will be our default child route
         element: <Body />, // these elements will get replaced with Outlet defined in AppLayout
       },
       {
@@ -26,9 +29,17 @@ const appRouter = new createBrowserRouter([
         element: <Contact />,
       },
       {
-        path:"/restaurants/:resId",
-        element: <RestaurantMenu/>
-      }
+        path: "/grocery",
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Grocery />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/restaurants/:resId",
+        element: <RestaurantMenu />,
+      },
     ],
     errorElement: <ErrorComponent />,
   },

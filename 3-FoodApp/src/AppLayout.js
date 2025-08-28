@@ -18,7 +18,9 @@ const AppLayout = () => {
   return (
     <div>
       <Header />
-      <Outlet />
+      <div style={{ padding: 10 }}>
+        <Outlet />
+      </div>
       {/*
       This Outlet component is provided by react-router
       With the help of this , the children routes created in the route configuration(createBrowserRouter)

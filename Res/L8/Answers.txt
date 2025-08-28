@@ -1,0 +1,123 @@
+Q)Why we can’t make the useEffect callback async?
+
+useEffect(async () => {
+  const data = await fetchData(); // ❌ not allowed
+  setData(data);
+}, []);
+
+
+This looks natural, but React doesn’t allow the effect callback itself to be async.
+Reason:
+
+Return type conflict
+
+useEffect expects your callback to either return nothing (undefined) or a cleanup function.
+
+But if you mark it async, the function always returns a Promise.
+
+React would then get a Promise instead of a cleanup function, which breaks the lifecycle contract.
+
+React needs sync cleanup
+
+Cleanup must run immediately (synchronously) when the component unmounts or dependencies change.
+
+If React had to “await” an async cleanup, things could get out of sync.
+
+
+Q)createHashRouter, createMemoryRouter and createBrowserRouter.
+The different router types in React Router (v6.4+). They all work with the same concepts (routes config, <Outlet />, loaders, 
+etc.), but differ in how they store and read the navigation state.
+
+🔹 1. createBrowserRouter
+
+Uses the HTML5 History API (pushState, popState).
+
+URLs look clean and normal (e.g. /dashboard/profile).
+
+Best for modern web apps deployed on a server that supports client-side routing.
+
+👉 Example:
+
+https://myapp.com/dashboard/profile
+
+
+✅ Pros: clean URLs, widely used.
+⚠️ Con: Needs proper server configuration — you must redirect all routes (*) to index.html. Otherwise, refreshing /dashboard/profile may give a 404 from the server.
+
+🔹 2. createHashRouter
+
+Uses the URL hash (#) to simulate navigation.
+
+The part after # never goes to the server; it’s only used on the client.
+
+URLs look like:
+
+https://myapp.com/#/dashboard/profile
+
+
+✅ Pros: No server setup needed, works on static file hosts (like GitHub Pages).
+⚠️ Con: Hash in the URL isn’t as clean, may not be SEO-friendly.
+
+🔹 3. createMemoryRouter
+
+Keeps the navigation in memory — no interaction with the browser URL bar at all.
+
+Useful for:
+
+Testing React components with routing (Jest, Cypress).
+
+Non-browser environments (e.g. React Native, Electron).
+
+👉 Example:
+
+const router = createMemoryRouter([
+  { path: "/", element: <Home /> },
+  { path: "/about", element: <About /> },
+], {
+  initialEntries: ["/about"], // starting route
+  initialIndex: 0,
+});
+
+
+✅ Pros: Great for testing, doesn’t depend on window.location.
+⚠️ Con: Users can’t see or share the route via URL (no address bar sync).
+
+🔑 Quick Comparison
+Router	URL Looks Like	Use Case
+createBrowserRouter	/dashboard/profile	Modern web apps with server setup
+createHashRouter	/#/dashboard/profile	Static hosting (GitHub Pages, S3)
+createMemoryRouter	(no URL bar update, internal only)	Tests, React Native, special envs
+
+Q)What is the order of life cycle method calls in Class Based Components
+-constructor
+-render
+-componentDidMount
+-componentDidUpdate
+-componentWillUnmount
+
+
+Q)Why do we use componentDidMount?
+-Wheneever we update the state variable
+-The cycle that follows is
+  -Render(updated variables)
+  -React performs DOM manipulation
+  -componentDidMount is called
+
+Q)Why do we use componentWillUnmount? Show with example
+-This is used for cleanup for our component
+-For e.g if we use a setInterval on componentDidMount of a component 
+-Then it will get executed again and again after that interval
+-If we forget to clearInterval and move to another page then also it will be executed
+-To prevent such behaviours we write our cleanup logic in componentWillUnmount function 
+
+Q)(Research) Why do we use super(props) in constructor?
+-In JavaScript classes, when you create a subclass using extends, you must call super() before using this.
+-super() calls the constructor of the parent class (React.Component here).
+-Passing props into super(props) makes sure that this.props inside your component is properly initialized
+-If you don’t use super(props)
+  -If you just write super(), then this.props will be undefined inside the constructor.
+  -React will still pass props to the component automatically, so this.props will work fine outside the constructor (like in 
+  render).
+  -But if you try to access this.props inside the constructor before calling super(props), you’ll get an error.
+
+

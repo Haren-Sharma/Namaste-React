@@ -1,0 +1,14 @@
+Q)Advantages and disadvantages of using this code splitting pattern?
+Advantages:
+    -smaller initial bundle
+    -on demand loading
+    -better user experience
+    -scalability
+    -efficient caching
+
+Disadvantages:
+    -Extra HTTP requests
+    -Slight Delay When Loading New Chunks 
+    -Requires Suspense Fallback
+    -Not always worth it for smaller components
+    -Server Side Rendering Complexity

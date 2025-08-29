@@ -1,0 +1,61 @@
+Q)What are various ways to add images into our App? Explain with code examples
+React Web: import, public/, remote URLs, CSS backgrounds.
+React Native: require(), uri, Base64, ImageBackground.
+
+Q)What would happen if we do console.log(useState())?
+- [undefined,f]
+
+Q)How will useEffect behave if we don't add a dependency array ?
+-It will be called on every render
+
+Q)What is SPA?
+-A Single Page Application (SPA) is a type of web application where the entire app runs inside a single HTML page (index.html), and 
+content is updated dynamically using JavaScript (usually via frameworks like React, Angular, Vue).
+
+Advantages of SPA
+
+Fast navigation → no full page reloads.
+
+Better user experience → feels like a native app.
+
+Less server load → backend mostly provides data (JSON).
+
+Reusable components → common in React, Vue, Angular.
+
+⚠️ Disadvantages of SPA
+
+Initial load can be heavy → needs to download the whole app JS bundle.
+
+SEO issues → since it’s mostly JS-rendered, search engines may struggle (though solutions exist like SSR / prerendering).
+
+Back/forward navigation issues (if routing isn’t handled properly).
+
+JavaScript dependency → app won’t work if JS fails or is disabled.
+
+Q)What is difference between Client Side Routing and Server Side Routing?
+Client-Side Routing (CSR)
+
+Who handles the routing? 👉 The browser (via JavaScript).
+
+How it works?
+
+The app loads a single index.html.
+
+When you click a link, JavaScript (e.g., react-router-dom) intercepts it.
+
+It changes the URL in the address bar (using the History API: pushState, replaceState).
+
+Instead of making a new request to the server, it swaps/loads a component inside the same page.
+
+
+Server-Side Routing (SSR or Traditional Routing)
+
+Who handles the routing? 👉 The server.
+
+How it works?
+
+Every time you click a link, the browser sends an HTTP request (GET /about).
+
+The server looks up that route and responds with a new HTML page.
+
+Browser reloads the page with the new content.

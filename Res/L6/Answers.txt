@@ -1,0 +1,140 @@
+Q)Why do we need a useEffect Hook?
+-To perform side effects in functional components.
+-To run code when the component mounts, updates, or unmounts
+-To clean up resources when the component unmounts
+
+Q)what is a side effect ?
+A side effect in React is any action that interacts with the outside world or affects something outside the component’s render 
+scope, such as fetching data, subscriptions, timers, DOM manipulations, or logging. We use useEffect to handle these side effects 
+safely after render.
+
+Q)What is Optional Chaining?
+Optional chaining is a JavaScript feature (introduced in ES2020) that lets you safely access nested object properties without 
+having to manually check if each property exists.
+
+👉 If the property doesn’t exist, instead of throwing an error (Cannot read property ... of undefined), it returns undefined.
+
+const user = {
+  name: "Haren",
+  address: {
+    city: "Delhi"
+  }
+};
+
+console.log(user?.address?.city); // "Delhi"
+console.log(user?.contact?.phone); // undefined (no error)
+
+Q)What is Shimmer UI?
+-Shimmer UI is a loading placeholder effect that mimics the structure of actual content while data is being fetched.
+-Instead of showing a blank screen or spinner, it shows grey boxes/lines with a shimmer (animated gradient) effect.
+-Improves user experience by indicating that content is "loading in place".
+
+Q)What is the difference between JS expression and JS statement
+JS Expression: Produces a value. Can be assigned to a variable.
+👉 Examples: 2 + 2, user.name, func(), x > 10 ? "yes" : "no".
+
+JS Statement: Performs an action but doesn’t return a value directly.
+👉 Examples: if, for, while, return, switch.
+
+✅ Example:
+
+// Expression
+let sum = 5 + 3; // value = 8
+
+// Statement
+if (sum > 5) {   // action (no value by itself)
+  console.log("Greater than 5");
+}
+
+Q)What is Conditional Rendering
+-Conditional rendering means rendering UI elements based on certain conditions.
+
+Q)What is CORS?
+-CORS (Cross-Origin Resource Sharing) is a browser security feature.
+-It prevents a website (say http://frontend.com) from making requests to a different domain (http://api.backend.com) unless the 
+backend explicitly allows it.
+-The browser enforces this rule. Node, curl, Postman don’t care about CORS.
+
+🚦 How does it work?
+
+    Step 1: Browser makes a cross-origin request
+    Example: Frontend at http://localhost:3000 calls API at http://api.example.com.
+    fetch("http://api.example.com/users");
+
+    The browser automatically adds:
+        Origin: http://localhost:3000
+
+    Step 2: Server responds with CORS headers
+    If the server replies with:
+    Access-Control-Allow-Origin: http://localhost:3000
+
+    ✅ Request succeeds.
+
+    If missing/wrong:
+
+    ❌ Browser blocks response and shows CORS error in console.
+
+    Step 3: Preflight Request (sometimes)
+    For non-simple requests (custom headers, JSON body, methods like PUT/DELETE),
+    the browser first sends an OPTIONS request to “ask permission”.
+
+    Example preflight request:
+
+        OPTIONS /users
+        Origin: http://localhost:3000
+        Access-Control-Request-Method: POST
+        Access-Control-Request-Headers: Content-Type, Authorization
+
+
+    Server must reply:
+
+        Access-Control-Allow-Origin: http://localhost:3000
+        Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+        Access-Control-Allow-Headers: Content-Type, Authorization
+
+
+    If approved → browser sends the actual POST/PUT.
+    If not → browser blocks it.
+
+⚙️ Where is Access-Control-Allow-Origin set?
+    
+    It is always set in the backend code or server config, because the backend decides who can access it.
+
+Example in Express.js (Node.js)
+    import express from "express";
+    import cors from "cors";
+
+    const app = express();
+
+    // Allow all origins
+    app.use(cors());
+
+    // OR allow specific origins
+    app.use(cors({
+    origin: "http://localhost:3000"
+    }));
+
+    app.get("/users", (req, res) => {
+    res.json({ name: "Haren" });
+    });
+
+    app.listen(5000);
+
+Gist:
+    Simple request → Browser sends request directly (with Origin header).
+    Non-simple request → Browser sends only preflight first. Actual request is sent only if preflight succeeds.
+
+Q)What is async and await?
+async: Declares a function that returns a Promise.
+
+await: Pauses execution inside an async function until a Promise resolves, then returns the result.
+async function fetchData() {
+  let res = await fetch("https://api.example.com/data");
+  let json = await res.json();
+  console.log(json);
+}
+
+Q)What is the use of `const json = await data.json()
+-fetch() returns a Response object.
+-response.json() is an asynchronous method that parses the response body as JSON.
+-We use await to wait for parsing before using the data.

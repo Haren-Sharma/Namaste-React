@@ -59,12 +59,12 @@ const Body = () => {
     <div className="body">
       <div className="body-header-container">
         <input
-          style={{ paddingLeft: 20, paddingRight: 20 }}
+          className="border-2"
           type="text"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <button id="filter-top-rated" onClick={search}>
+        <button className="border-2 px-4" onClick={search}>
           Search
         </button>
         <button id="filter-top-rated" onClick={filterTopRatedRes}>

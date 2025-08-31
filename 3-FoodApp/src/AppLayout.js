@@ -1,7 +1,17 @@
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import { Outlet } from "react-router";
 
 const AppLayout = () => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
   /*
     Header
     -Logo
@@ -17,9 +27,9 @@ const AppLayout = () => {
     */
   return (
     <div>
-      <Header />
-      <div style={{ padding: 10 }}>
-        <Outlet />
+      <Header setDarkMode={setDarkMode}/>
+      <div className="bg-amber-300 dark:bg-amber-950">
+      <Outlet />
       </div>
       {/*
       This Outlet component is provided by react-router

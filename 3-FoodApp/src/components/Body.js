@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { SWIGGY_API_URL } from "../utils/constants";
 import { useNavigate } from "react-router";
 import useOnlineStatus from "../hooks/useOnlineStatus";
+import TopRatedRestaurantCardComponent from "./TopRatedRestaurantCardComponent";
 
 const Body = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -11,6 +12,9 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
   const onlineStatus = useOnlineStatus();
   const navigate = useNavigate();
+
+  const TopRatedRestaurantCard =
+    TopRatedRestaurantCardComponent(RestaurantCard); //higher order component
 
   const fetchRes = async () => {
     const res = await fetch(SWIGGY_API_URL);
@@ -72,19 +76,26 @@ const Body = () => {
         </button>
       </div>
       <div id="restaurant-container">
-        {filteredListRestaurants.map((restaurant) => (
+        {filteredListRestaurants.map((restaurant) =>
           /*
           Dynmaic Routing:
             -Link
             -useNavigate()
           */
-
-          <RestaurantCard
-            handleClick={() => navigateToMenuPage(restaurant?.info?.id)}
-            key={restaurant?.info?.id}
-            data={restaurant?.info}
-          />
-        ))}
+          restaurant?.info?.avgRating > 4.4 ? (
+            <TopRatedRestaurantCard
+              handleClick={() => navigateToMenuPage(restaurant?.info?.id)}
+              key={restaurant?.info?.id}
+              data={restaurant?.info}
+            />
+          ) : (
+            <RestaurantCard
+              handleClick={() => navigateToMenuPage(restaurant?.info?.id)}
+              key={restaurant?.info?.id}
+              data={restaurant?.info}
+            />
+          )
+        )}
       </div>
     </div>
   );

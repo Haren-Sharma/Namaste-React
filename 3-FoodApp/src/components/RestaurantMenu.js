@@ -1,5 +1,7 @@
 import { useParams } from "react-router";
 import useRestaurantMenu from "../hooks/useRestaurantMenu";
+import categories from "../utils/mockData";
+import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantMenu = () => {
   /*
@@ -12,14 +14,14 @@ const RestaurantMenu = () => {
   const restaurant = useRestaurantMenu(resId);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1 style={{ marginTop: 10 }}>{restaurant?.name}</h1>
-      <h3 style={{ marginTop: 20, fontStyle: "italic" }}>Menu Items:</h3>
-      <div style={{ marginTop: 10 }}>
-        {restaurant?.cuisines?.map((c) => {
-          return <li key={c}>{c}</li>;
-        })}
-      </div>
+    <div className="flex flex-col items-center">
+      <h1 className="my-5 font-bold text-2xl">{restaurant?.name}</h1>
+      {/*categories*/
+        categories?.map((c)=>{
+          return <RestaurantCategory key={c.id} title={c.title} items={c.items} />
+        })
+      }
+
     </div>
   );
 };

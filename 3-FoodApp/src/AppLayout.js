@@ -28,7 +28,7 @@ const AppLayout = () => {
   return (
     <div>
       <Header setDarkMode={setDarkMode}/>
-      <div className="bg-amber-300 dark:bg-amber-950">
+      <div>
       <Outlet />
       </div>
       {/*

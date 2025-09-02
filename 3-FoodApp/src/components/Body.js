@@ -79,7 +79,7 @@ const Body = () => {
           Top Rated
         </button>
         <input
-          className="border border-2 p-4"
+          className="border-2 p-4"
           type="text"
           value={userName}
           onChange={(e) => setUser(e.target.value)}

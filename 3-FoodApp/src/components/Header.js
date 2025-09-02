@@ -2,11 +2,14 @@ import { getUser } from "../context/UserContextProvider";
 import useOnlineStatus from "../hooks/useOnlineStatus";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router";
+import { useSelector } from "react-redux";
 
 const Header = ({setDarkMode}) => {
   const onlineStatus = useOnlineStatus();
   const {userName}=getUser();
-  /*
+  const cart=useSelector(store=>store?.cart?.items);    //subscribing to the store
+  console.log(cart)
+  /* 
      Header
     -Logo
     -NavItems
@@ -16,21 +19,17 @@ const Header = ({setDarkMode}) => {
         -Cart
     */
   return (
-    <div className="header">
-      <div className="logo-container">
+    <div className="bg-amber-300 flex items-center p-2">
+    
         <img className="logo" src={LOGO_URL} />
-      </div>
-      <div className="nav-container">
-        <ul>
+      
+      <div className=" ml-auto">
+        <ul className="flex gap-12">
           <li>
             Status:
             {
               <span
-                className={
-                  onlineStatus
-                    ? "status status-online"
-                    : "status status-offline"
-                }
+                className=""
               >
                 {onlineStatus ? " Online" : " Offline"}
               </span>
@@ -49,7 +48,7 @@ const Header = ({setDarkMode}) => {
             <Link to="/grocery">Grocery</Link>
           </li>
           <li>
-            <Link to="/cart">Cart</Link>
+            <Link to="/cart">Cart<span className="font-bold">{cart?.length>0 && `-${cart?.length} Items`}</span></Link>
           </li>
           <li>
             <span className="active:opacity-70 border-black" onClick={()=>setDarkMode(d=>!d)}>Mode</span>

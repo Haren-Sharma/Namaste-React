@@ -1,0 +1,27 @@
+Q)What is prop drilling?
+-Prop drilling is the process of passing data down through multiple levels of components, even if some 
+intermediate components don’t need the data themselves.
+-Example: Passing logged-in user info from the root component down to deeply nested children.
+
+Q)What is lifting the state up?
+-Lifting state up means moving a state variable from a child component into a common ancestor (usually the parent) 
+so that multiple components can share and sync that state.
+-We can use this to make our component controlled from uncontrolled(lift it's state to its parent and then pass it as props)
+-Remember that accordian example how opening one collapses the remaining 
+
+Q)What is Context Provider and Context Consumer?
+-Context Provider
+Used to wrap components and provide a value (state, data, functions) that can be accessed by any nested child 
+without prop drilling.
+
+-Context Consumer
+Used to access context inside components (mostly useful in class components or before useContext hook existed).
+
+Example:
+
+<MyContext.Consumer>
+  {value => <div>{value}</div>}
+</MyContext.Consumer>
+
+Q)If you don’t pass a value to the provider does it take the default value?
+-yes

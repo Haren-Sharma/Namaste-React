@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import { Outlet } from "react-router";
+import UserContextProvider from "./context/UserContextProvider";
 
 const AppLayout = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -26,18 +27,16 @@ const AppLayout = () => {
         -Restaurant Cards
     */
   return (
-    <div>
-      <Header setDarkMode={setDarkMode}/>
-      <div>
+    <UserContextProvider>
+      <Header setDarkMode={setDarkMode} />
       <Outlet />
-      </div>
       {/*
       This Outlet component is provided by react-router
       With the help of this , the children routes created in the route configuration(createBrowserRouter)
       will get replaced with Outlet, depending upon the path given to the children.
       This won't affect our Header it will remian intact in it's position
       */}
-    </div>
+    </UserContextProvider>
   );
 };
 export default AppLayout;

@@ -5,6 +5,7 @@ import { SWIGGY_API_URL } from "../utils/constants";
 import { useNavigate } from "react-router";
 import useOnlineStatus from "../hooks/useOnlineStatus";
 import TopRatedRestaurantCardComponent from "./TopRatedRestaurantCardComponent";
+import { getUser } from "../context/UserContextProvider";
 
 const Body = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -12,6 +13,8 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
   const onlineStatus = useOnlineStatus();
   const navigate = useNavigate();
+
+  const { userName, setUser } = getUser();
 
   const TopRatedRestaurantCard =
     TopRatedRestaurantCardComponent(RestaurantCard); //higher order component
@@ -75,6 +78,12 @@ const Body = () => {
         <button id="filter-top-rated" onClick={filterTopRatedRes}>
           Top Rated
         </button>
+        <input
+          className="border border-2 p-4"
+          type="text"
+          value={userName}
+          onChange={(e) => setUser(e.target.value)}
+        />
       </div>
       <div id="restaurant-container">
         {filteredListRestaurants.map((restaurant) =>

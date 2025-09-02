@@ -1,9 +1,11 @@
+import { getUser } from "../context/UserContextProvider";
 import useOnlineStatus from "../hooks/useOnlineStatus";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router";
 
 const Header = ({setDarkMode}) => {
   const onlineStatus = useOnlineStatus();
+  const {userName}=getUser();
   /*
      Header
     -Logo
@@ -50,8 +52,9 @@ const Header = ({setDarkMode}) => {
             <Link to="/cart">Cart</Link>
           </li>
           <li>
-            <span className="active:opacity-70" onClick={()=>setDarkMode(d=>!d)}>Mode</span>
+            <span className="active:opacity-70 border-black" onClick={()=>setDarkMode(d=>!d)}>Mode</span>
           </li>
+          <li>User Logged In:{userName}</li>
         </ul>
       </div>
     </div>

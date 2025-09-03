@@ -148,6 +148,7 @@ const config = {
 
   // The test environment that will be used for testing
   testEnvironment: "jsdom",
+  setupFilesAfterEnv: ["C:/Users/DELL/Desktop/HAREN/Namaste-React/3-FoodApp/jest.setup.js"],
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},

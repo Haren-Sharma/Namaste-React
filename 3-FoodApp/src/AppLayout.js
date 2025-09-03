@@ -31,8 +31,11 @@ const AppLayout = () => {
   return (
     <Provider store={store}>
       <UserContextProvider>
-        <Header setDarkMode={setDarkMode} />
+        <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+        <div className="bg-amber-200 dark:bg-amber-700">
+
         <Outlet />
+        </div>
         {/*
       This Outlet component is provided by react-router
       With the help of this , the children routes created in the route configuration(createBrowserRouter)

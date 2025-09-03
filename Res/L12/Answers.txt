@@ -1,0 +1,7 @@
+Q)useContext vs Redux.
+Q)Advantage of using Redux Toolkit over Redux.
+Q)Explain Dispatcher.
+Q)Explain Reducer.
+Q)Explain slice.
+Q)Explain selector.
+Q)Explain createSlice and the configuration it takes

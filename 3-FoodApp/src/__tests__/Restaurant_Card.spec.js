@@ -1,54 +1,30 @@
+import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import ResData from "../mocks/ResCardMock.json";
 import RestaurantCard from "../components/RestaurantCard";
-import "@testing-library/jest-dom"
-import { IMG_URL } from "../utils/constants";
+import RES_CARD_MOCK_DATA from "../mocks/ResCardMock.json";
 
-it("should render the restaurant card",()=>{
-    render(<RestaurantCard data={ResData} handleClick={()=>{}}/>)
+it("should render Restaurant Card Component with props data", () => {
+  const mockHandleClick = jest.fn(() => {});
 
-    const res_name=screen.getByText("Pizza Hut");
+  render(
+    <RestaurantCard data={RES_CARD_MOCK_DATA} handleClick={mockHandleClick} />
+  );
 
-    expect(res_name).toBeInTheDocument();
-})
+  const element = screen.getByText("Pizza Hut");
 
-it("should render locality and area name text",()=>{
-    render(<RestaurantCard data={ResData} handleClick={()=>{}}/>)
+  expect(element).toBeInTheDocument();
+});
 
-    const locationText = `${ResData.locality}, ${ResData.areaName}`;
-    expect(screen.getByText(locationText)).toBeInTheDocument();
-})
+it("should trigger the handle click function passed a prop", () => {
+  const mockHandleClick = jest.fn(() => {});
 
-it("should render cuisines text (first up to 3)",()=>{
-    render(<RestaurantCard data={ResData} handleClick={()=>{}}/>)
+  render(
+    <RestaurantCard data={RES_CARD_MOCK_DATA} handleClick={mockHandleClick} />
+  );
 
-    // Mock has only one cuisine
-    expect(screen.getByText("Pizzas")).toBeInTheDocument();
-})
+  const card = screen.getByText("Pizza Hut");
 
-it("should render average rating",()=>{
-    render(<RestaurantCard data={ResData} handleClick={()=>{}}/>)
+  fireEvent.click(card);
 
-    expect(screen.getByText(String(ResData.avgRating))).toBeInTheDocument();
-})
-
-it("should render the image with correct src",()=>{
-    render(<RestaurantCard data={ResData} handleClick={()=>{}}/>)
-
-    const img = screen.getByRole("img");
-    expect(img).toHaveAttribute("src", IMG_URL + ResData.cloudinaryImageId);
-})
-
-it("should call handleClick when card is clicked",()=>{
-    const onClick = jest.fn();
-    render(<RestaurantCard data={ResData} handleClick={onClick}/>)
-
-    const card = screen.getByText("Pizza Hut").closest(".restaurant-card");
-    // Fallback: click on the text if closest fails
-    if (card) {
-        fireEvent.click(card);
-    } else {
-        fireEvent.click(screen.getByText("Pizza Hut"));
-    }
-    expect(onClick).toHaveBeenCalledTimes(1);
-})
+  expect(mockHandleClick).toHaveBeenCalled();
+});

@@ -10,7 +10,7 @@ const RestaurantCard = ({ data,handleClick }) => {
     avgRating,
   } = data;
   return (
-    <div onClick={()=>handleClick()} className="restaurant-card">
+    <div data-testid="res_card" onClick={()=>handleClick()} className="restaurant-card">
       <img src={IMG_URL + cloudinaryImageId} className="restaurant-card-img" />
       <div>{name}</div>
       <div>{locality + ", " + areaName}</div>

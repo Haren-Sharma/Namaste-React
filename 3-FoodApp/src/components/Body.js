@@ -22,7 +22,6 @@ const Body = () => {
   const fetchRes = async () => {
     const res = await fetch(SWIGGY_API_URL);
     const data = await res.json();
-    console.log("🚀 ~ fetchRes ~ d̥ata:", data);
     setRestaurants(
       data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
@@ -67,6 +66,7 @@ const Body = () => {
     <div className="body">
       <div className="body-header-container">
         <input
+          data-testid="res_input_box"
           className="border-2"
           type="text"
           value={searchText}

@@ -47,7 +47,7 @@ const Header = ({ setDarkMode, darkMode }) => {
           </li>
           <li>
             <span
-              className="cursor-pointer active:opacity-70 border border-2 p-2"
+              className="cursor-pointer active:opacity-70 border-2 p-2"
               onClick={() => {
                 console.log("Function Triggered")
                 setDarkMode((d) => !d)

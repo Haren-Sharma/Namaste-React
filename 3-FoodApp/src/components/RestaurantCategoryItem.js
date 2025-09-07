@@ -19,7 +19,7 @@ const handleItemClick=()=>{
         <div className="font-bold">{"$" + price}</div>
       </div>
       <div className="relative p-2">
-        <div onClick={handleItemClick} className="absolute cursor-pointer bg-black text-white rounded-xl px-3 py-1 bottom-0 right-12">
+        <div data-testid="add_Button_div" onClick={handleItemClick} className="absolute cursor-pointer bg-black text-white rounded-xl px-3 py-1 bottom-0 right-12">
           Add +
         </div>
         <img className="w-40 rounded-xl" src={image} />

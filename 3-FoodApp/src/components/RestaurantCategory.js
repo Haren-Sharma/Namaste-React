@@ -5,6 +5,7 @@ const ResttaurantCategory = ({ title, items,showItems,onClick }) => {
   return (
     <div className="w-6/12  border-1  mb-4">
       <div
+      data-testid="res_category"
         className="p-2 flex justify-between border-b-1"  onClick={()=>onClick(showItems)}
       >
         <div>{title + " (" + items?.length + ")"}</div>

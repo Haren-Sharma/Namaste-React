@@ -1,7 +1,137 @@
 Q)useContext vs Redux.
+Both are state management solutions in React, but they serve different purposes and scales.
+
+🔹 useContext
+-A React built-in hook for passing data through the component tree without prop drilling.
+-Works best for small to medium apps or when state isn’t very complex.
+-Example use case: theme switching, auth user, or language preference.
+
+✅ Simple, no extra libraries.
+❌ Not optimized for large apps — re-renders all consumers when context changes.
+❌ No built-in tools for debugging, middleware, or devtools.
+
+
+🔹 Redux
+-A predictable state container for JavaScript apps.
+-Manages global state in a centralized store with strict rules (actions, reducers).
+-Good for large, complex apps with many components sharing/updating state.
+
+✅ Great for complex state management, async flows, debugging.
+✅ DevTools support for time-travel debugging.
+❌ Boilerplate (though much reduced with Redux Toolkit).
+❌ Overkill for small apps.
+
+
 Q)Advantage of using Redux Toolkit over Redux.
+🔹 Advantages:
+-Less Boilerplate
+    -Old Redux required separate actions, actionTypes, reducers.
+    -RTK’s createSlice bundles all in one place.
+
+const counterSlice = createSlice({
+  name: "counter",
+  initialState: 0,
+  reducers: {
+    increment: (state) => state + 1,
+  },
+});
+
+
+-Built-in Immer
+    -Lets you write “mutating” code (state.value++) safely because RTK uses Immer under the hood to keep immutability.
+
+-Simplified Async (with createAsyncThunk)
+    -Old Redux needed redux-thunk or redux-saga + boilerplate.
+    -RTK provides createAsyncThunk for handling async requests easily.
+
+    const fetchUser = createAsyncThunk("user/fetch", async (id) => {
+        const res = await fetch(`/api/users/${id}`);
+        return res.json();
+        });
+
+
+-Best Practices Built-in
+    -Uses good defaults (like Redux DevTools enabled, Thunk middleware included).
+    -Encourages slice-based structure (scalable for large apps).
+
+-Developer Experience
+    -Smaller, cleaner codebase.
+    -Debuggable with Redux DevTools.
+    -Officially recommended in Redux docs.
+
 Q)Explain Dispatcher.
+-it’s simply the mechanism by which we send actions to the Redux store.
+-These action objects describe what happened (e.g., ADD_ITEM, REMOVE_USER).
+-Once dispatched, the store forwards the action to the reducer(s), which update the state accordingly.
+-We do this using the store.dispatch(action) function.
+
+✅ Example:
+store.dispatch({ type: "ADD_ITEM", payload: { id: 1, name: "Garlic Breadsticks" } });
+
+-In React-Redux, the dispatcher is simply the dispatch function that we get from the useDispatch 
+hook. It’s the function used to send actions from a React component to the Redux store. Once 
+dispatched, Redux passes the action to reducers, which update the state. So in practice, useDispatch 
+is how components get access to the dispatcher.
+
 Q)Explain Reducer.
+-We cannot directly mutate or update the Redux store.
+-A reducer is a pure function that takes the current state and an action as input, and returns a new 
+state.
+-The reducer looks at the action’s type (and sometimes its payload) to decide how to update the state
+
+Q)Explain Pure function
+A pure function is a function that always produces the same output for the same input, and has no 
+side effects.
+
 Q)Explain slice.
+-A slice in Redux Toolkit is a portion of the Redux store that manages one feature/state domain 
+(e.g., cartSlice, userSlice).
+-Each slice contains:
+    An initial state
+    Reducers (to handle actions)
+    Generated action creators
+-Slices make code modular, readable, and easy to scale.
+
 Q)Explain selector.
+-A selector is a function that extracts a piece of state from the Redux store.
+-Or we can say it is a function that help us subscribe to a particular part of a store
+-useSelector()
+
 Q)Explain createSlice and the configuration it takes
+createSlice is a Redux Toolkit function that generates a slice.
+It accepts a configuration object with these keys:
+
+name → A unique string for the slice (used as prefix in action types).
+
+initialState → The starting state for this slice.
+
+reducers → An object with reducer functions (case reducers). Each function:
+
+Mutates the state safely (Immer under the hood ensures immutability).
+
+Automatically generates an action creator with the same name.
+
+extraReducers (optional) → To handle actions defined outside the slice (e.g., async thunks or other slices).
+
+✅ Example with all configs:
+
+const userSlice = createSlice({
+  name: "user",
+  initialState: { profile: null, loading: false },
+  reducers: {
+    setUser: (state, action) => {
+      state.profile = action.payload;
+    },
+    clearUser: (state) => {
+      state.profile = null;
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUser.pending, (state) => { state.loading = true; })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.profile = action.payload;
+        state.loading = false;
+      });
+  }
+});

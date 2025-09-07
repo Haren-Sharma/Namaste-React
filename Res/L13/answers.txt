@@ -1,3 +1,49 @@
 Q)What is Enzyme?
+Enzyme is a JavaScript testing utility for React, created by Airbnb.
+
+It allows you to:
+-Shallow render (render only a component without its children)
+-Mount (render a component and all its children)
+-Traverse React components’ output and simulate events.
+
+It’s mainly used for unit testing React components.
+
+✅ Example (with shallow rendering):
+
+import { shallow } from "enzyme";
+import MyButton from "./MyButton";
+
+test("renders button text", () => {
+  const wrapper = shallow(<MyButton label="Click me" />);
+  expect(wrapper.text()).toBe("Click me");
+});
+
+
+👉 However, Enzyme is now largely deprecated (doesn’t support React 18+ well).
+
 Q)Enzyme vs React Testing Library
+| Feature               | **Enzyme**                                        | **React Testing Library (RTL)**                            |
+| --------------------- | ------------------------------------------------- | ---------------------------------------------------------- |
+| **Philosophy**        | Tests implementation details of components        | Tests components the way a **user would interact**         |
+| **Rendering**         | Shallow or full DOM rendering                     | Always full DOM (via JSDOM), encourages integration-style  |
+| **API**               | Lots of utilities (`shallow`, `mount`, `.find()`) | Minimal API (`render`, `screen`, `fireEvent`, `userEvent`) |
+| **Learning Curve**    | Steeper, many helpers                             | Simpler, encourages best practices                         |
+| **React 18+ support** | Poor / outdated                                   | Actively maintained and recommended                        |
+| **Use Case**          | Unit testing specific component logic             | Testing behavior, accessibility, and user flows            |
+
+In short:
+Enzyme = checks how a component is implemented.
+RTL = checks how a component behaves from a user’s perspective.
+
 Q)What is Jest and why do we use it?
+-Jest is a JavaScript testing framework created by Meta (Facebook).
+-It’s commonly used with React but works with any JS project.
+-Jest comes with everything built-in: test runner, assertions, mocking, and snapshot testing.
+
+Why do we use Jest?
+-All-in-one → No need for extra libraries (like Mocha + Chai + Sinon).
+-Fast & Efficient → Runs tests in parallel, smartly caches results.
+-Great DX → Watch mode, clear error messages, code coverage out of the box.
+-Mocking Support → Easily mock functions, timers, or modules.
+-Snapshot Testing → Capture and compare UI output over time.
+-Standard for React → Works seamlessly with React Testing Library.
